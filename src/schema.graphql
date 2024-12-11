@@ -1,0 +1,1738 @@
+# The implementation for this scalar is provided by the
+# 'GraphQLUpload' export from the 'graphql-upload' package
+# in the resolver map below.
+scalar Upload
+
+enum AirdropsFilter {
+  ALL
+  PARTICIPATED
+  CREATED
+  ACTIVE
+}
+type Query {
+  info: String!
+  users: [User!]!
+  kolCheck: [String]
+  KOLs: [KOL!]!
+  tokenInfo:userTokenInfo
+  tokenConfiguration:tokenConfig
+  inscoreOrding: OrderInscoreDefault!
+  KOLS(query:QueryKols): [KOL!]!
+  dictionary:[String]
+  KOL(tweeter_handle: String!): KOL
+  airdrop(id: ID!, wallet: WalletInput): Airdrop
+  airdropenum:[projectPartners]
+  filterAirdrop(projectId: ID!): [Airdrop!]
+  loadCeramic(id: ID!): String
+  azdt(site: String): String
+  airdrops(
+    wallet: WalletInput
+    parentLabel: String
+    filter: AirdropsFilter
+    listed: Boolean
+  ): [Airdrop!]!
+  airdropsSimulation(
+    wallet: WalletInput
+    parentLabel: String
+  ): [AirdropSimulationType]
+  airdropSimulation(
+    id: String!
+  ): AirdropSimulationType
+  airdropProjectBackedBy: [airdropProjectBackedBy!]!
+  airdropParticipations(
+    airdrop_id: ID!
+    after: String
+    limit: Int
+  ): [AirdropParticipation!]!
+  chats: [Chat!]!
+  redEnvelope(envelope_id: ID!, is_campaign: Boolean): RedEnvelope
+  myRedEnvelopeUser: RedEnvelopeUser!
+  tokenBalance(userAddress: String!, tokenAddress: String!): [TokenBalance!]
+  userEthProfile(userAddress: String!): UserEthProfile
+  chat(chat_id: ID!): Chat
+  user(user_id: ID!): User
+  #  akiUser(user_id: ID!): AkiUser
+  akiUser(address: String!): AkiUser
+  discordUser(code: String!): DiscordUser
+  influencers: [Influencer!]!
+  checkAirdropTwitterShare(
+    airdrop_id: String!
+    link_twitter_url: String!
+    link_twitter_validation: AirdropParticipationLinkTwitterValidationInput!
+  ): AirdropTwitterShareCheckResult!
+  checkAirdropTwitterLike(
+  airdrop_id: String!
+  link_twitter_url: String!
+  link_twitter_validation: AirdropParticipationLinkTwitterValidationInput!
+): AirdropTwitterLikeCheckResult!
+  checkAirdropTwitterFollow(
+    airdrop_id: String!
+    twitter_handle: String!
+    link_twitter_validation: AirdropParticipationLinkTwitterValidationInput!
+  ): AirdropTwitterFollowCheckResult!
+
+  checkWorldcoinAction(
+    airdrop_id: String!
+    address: String!
+    action: String!
+    worldcoin_action_validation: WorldcoinActionValidationInput
+  ): AirdropTwitterFollowCheckResult!
+
+  checkAirdropTelegramJoin(
+    airdrop_id: String!
+    telegram_group_link_to_join: String!
+    link_telegram_validation: AirdropParticipationLinkTelegramValidationInput!
+  ): AirdropTelegramJoinCheckResult!
+
+  checkAirdropDiscordJoin(
+    airdrop_id: String!
+    discord_server_link_to_join: String!
+    link_discord_validation: AirdropParticipationLinkDiscordValidationInput!
+  ): AirdropDiscordJoinCheckResult!
+
+  checkAirdropInputQuestion(
+    airdrop_id: String!
+    input: AirdropInputQuestionInput!
+  ): AirdropInputQuestionCheckResult!
+
+  checkGoogleSheetValue(
+    airdrop_id: String!
+    input: GoogleSheetValueInput!
+  ): AirdropInputQuestionCheckResult!
+
+  ethSignStatus(signer_address: String!): EthSignedCheckResult!
+
+  redEnvelopeAmountWon(input: RedEnvelopeAmountWonInput!): RedEnvelopeAmountWon
+
+  verifyContractInteraction(
+    contract: String
+    sender: String!
+    selector: String!
+    chainId: Int!
+    transaction_hash: String
+  ): ContractInteractResult
+
+  myRedEnvelopStats: UserRedEnvelopeStats
+  referralCampaign(domain: String): ReferralCampaign
+
+  myAirdropReferrals(airdrop_id: String): [AirdropReferral!]
+
+  loginNonce(wallet: WalletInput): String
+
+  aptosLoginNonce(wallet: WalletInput): aptosNonce
+
+  suiLoginNonce(wallet: WalletInput): String
+
+  cosmosLoginNonce(wallet: WalletInput): String
+
+  checkInfluenceScore(
+    link_twitter_validation: AirdropParticipationLinkTwitterValidationInput
+    wallet: WalletInput
+  ): InfluenceScoreResult
+
+  getInfluenceViaEmailLater(
+    link_twitter_validation: AirdropParticipationLinkTwitterValidationInput
+    email: String
+  ): GetInfluenceViaEmailLaterResult
+
+  akiProtocolStats: AkiProtocolStats!
+
+  checkWalletAssets(address: String!, address2: String!): String
+  kolProfiles(twitter_username: String!): KolProfiles
+  akiBadges(wallet: WalletInput): [AkiBadge!]!
+  akiBadgeProof(nftType: String!, address: String!): AkiBadgeProof!
+  getKolFollowers(
+    twitter_username: String!
+    page: Int!
+    size: Int!
+  ): QueryKolFollower!
+
+  getKolRankInfo(
+    twitter_username: String!
+  ): [AirdropRankInfo]
+
+  isFollowersByKol(twitter_username: String!): Boolean
+
+  kolAkiBadges(
+    twitter_username: String!
+  ): [AkiBadgeNftInfo]
+
+  checkDiscordUserOnline(airdrop_id:String!
+    link_discord_validation: AirdropParticipationLinkDiscordValidationInput!
+    index:Int!
+  ): Boolean
+  subtaskDetails(id:String): [SubtaskDetailsInfo]
+  injectiveStatusCheck(address:String!,airdrop_id:String!):Boolean!
+  userVerificationCode(id:String):[UserVerificationCodeInfo]
+  rankInfo:[rankInfoSeason]
+  newRankInfo:[newRankInfoSeason]
+  deployContractDetails(airdrop_id:String!):deployContractDetails
+
+  nftOrder(airdrop_id:String!):nftOrder
+  tokenOrder(address:String!,ids:[String]):[tokenOrderInfo]
+  checkApi (walletAddress:String!,airdropId:String!,taskIndex:Int!,data:String!):Boolean!
+  checkAirdropApi (link:String!,type:String!,data:String!,checkKey:String!):Boolean!
+  rewardCollectionTips(address:String):[unaccalimed]
+  querySeries:[seriesData]
+  personalActivities:[String]
+  pledge:userpledge
+  pledgeExist:Boolean
+  pledgeExit:Boolean
+  pledgeII:pledgeII
+  pledgeIII(page:Int,size:Int):pledgeIII
+  
+  getSakuraUserInfo: userpledge
+  addSakuraPool: userpledge
+  exitSakuraPool: Boolean
+  getSakuraList(page:Int,size:Int): getSakuraList
+}
+
+type getSakuraList{
+  userpledge:[userpledge]
+  total:Int
+  totalAki:String,
+  totalAkiHolder:Int
+} 
+type pledgeIII{
+  userpledge:[userpledge]
+  total:Int
+} 
+
+type userpledge{
+   token:String
+   rank:Int
+   enterDate:String,
+   exitDate:String,
+   code:Int,
+   address:String
+}
+type pledgeII{
+  dragonPool:String
+  totalWorth:String,
+  detailedInformation:String,
+  expectedApy:String,
+  totalAki:String,
+  totalAkiHolder:Int
+}
+
+
+type unaccalimed{
+     id: String,
+     type: String
+}
+type seriesData{
+    series_name:String!
+    series_image:String!
+}
+
+
+type projectPartners{
+     title: String,
+     url: String
+}
+
+
+type userTokenInfo{
+  AkiBadge:String
+  Referral:String
+  Profile:String
+  Trending:String
+  Campaign:String
+  Total:String
+}
+
+type tokenOrderInfo{
+  id:String
+  chain:Int
+  tokenContract:String,
+  name:String,
+  title:String
+  token_symbol:String
+  token_decimal:Int
+}
+
+
+type tokenConfig{
+  akiContract:[akiContractPreview]
+  tokenContract:[tokenPreview]
+}
+
+type tokenPreview{
+  chain:Int
+  chainName:String
+  contract:String
+  name:String
+}
+
+type akiContractPreview{
+  chain:Int
+  chainName:String
+  contract:String
+}
+
+
+type newRankInfoSeason{
+  A:[KOL!]
+  B:[KOL!]
+}
+type rankInfoSeason{
+  A:[rankInfo!]
+  B:[rankInfo!]
+}
+type OrderInscoreDefault{
+  username:String,
+  state:String,
+  totalScore:String,
+}
+type rankInfo{
+  season:String!
+  address:String!
+  twitter:String!
+  level:Int!
+}
+input QueryKols{
+  languages:[String],
+  name:String,
+  sortTarget:String,
+  sort:String,
+  page:Int!,
+  quantity:Int!
+
+}
+
+type nftOrder{
+  address:String
+  airdops:String
+  chinIdName:String
+  contract:String
+  contractName:String
+  state:String
+  token:Int
+  hash:String
+}
+
+type deployContractDetails{
+  airdopName:String
+  airdops:String
+  chainId:Int
+  chinIdName:String
+  contract:String
+  contractName:String
+  hash:String
+  ownerAddress:String
+  state:String
+  symbol:String
+  tokenuri:String
+  totalsupply:Int
+}
+type aptosNonce {
+  message: String!
+  nonce: String!
+}
+type UserVerificationCodeInfo{
+  airdropsId:String
+  userId:String
+  index:Int
+  code:String
+  expiration_time:String
+  usage_count:Int
+}
+type AkiBadgeNftInfo{
+  level:Int
+  name:String
+  image:String
+  address:String
+}
+input GoogleSheetValueInput {
+  answer: String!
+  task_index: Int!
+}
+
+input AirdropInputQuestionInput {
+  answer: String!
+  task_index: Int!
+}
+
+type GetInfluenceViaEmailLaterResult {
+  success: Boolean
+  reason: String
+}
+
+type AirdropParticipation {
+  id: ID!
+  wallet: String
+  telegram: String
+  discord: String
+  twitter: String
+  twitter_share_link: String
+}
+type AirdropInfo{
+  cover_photo:String
+  end_date:String
+  start_date:String
+  title:String
+}
+
+type SubtaskDetailsInfo{
+  airdropsId:String
+  index: Int
+  code:String
+}
+
+type Web3Journey{
+  imageUrl:String
+  twitterHandle:String
+  twitterName:String
+  type:String
+  role:String
+  link:String
+  start:String
+  end:String
+}
+
+type nftGallery{
+  imageUrl:String
+  contract:String
+  name:String
+}
+
+input nftGalleryInput{
+  imageUrl:String
+  contract:String
+  name:String
+}
+
+input Web3JourneyInput{
+  imageUrl:String
+  twitterHandle:String
+  twitterName:String
+  type:String
+  role:String
+  link:String
+  start:String
+  end:String
+}
+
+
+type AirdropRankInfo{
+  airdropInfo:AirdropInfo
+  convertedCount:Int
+  count:Int
+  key:String
+  rank:Int
+  airdropID:String
+}
+
+type AirdropTwitterShareCheckResult {
+  success: Boolean!
+  tweet_id: String
+  share_twitter_url: String
+  reason: String
+}
+type AirdropTwitterLikeCheckResult {
+  success: Boolean!
+   reason: String
+}
+
+type AirdropTwitterFollowCheckResult {
+  success: Boolean!
+  following: Boolean
+  twitter_handle: String
+  reason: String
+}
+
+type AirdropDiscordJoinCheckResult {
+  success: Boolean!
+  discord_server_link_to_join: String
+  reason: String
+}
+
+type AirdropInputQuestionCheckResult {
+  success: Boolean!
+  reason: String
+}
+
+
+type MessageResult {
+  success: Boolean!
+  errorCode:Int
+  reason: String
+}
+
+type EthSignedCheckResult {
+  success: Boolean!
+}
+
+type AirdropTelegramJoinCheckResult {
+  success: Boolean!
+  telegram_group_link_to_join: String
+  reason: String
+}
+
+type ContractInteractResult {
+  interacted: Boolean
+  transaction_hash: String
+}
+
+input RedEnvelopeAmountWonInput {
+  transaction_json: String!
+  chain: Int!
+}
+
+type RedEnvelopeAmountWon {
+  tokenSymbol: String!
+  tokenAmount: Float!
+}
+
+type RewardRule {
+  chain: Int!
+  token: String!
+  erc1155TokenID: String
+  rateToReward: Float!
+}
+
+type ReferralCampaign {
+  decayRate: Float!
+  eligibilityThreshold: Float!
+  rewardRules: [RewardRule]
+}
+
+type UserRedEnvelopeStats {
+  total_red_envelopes_created: Int!
+  total_red_envelopes_opened: Int!
+  tokens_given: [UserRedEnvelopeStatsToken!]!
+  tokens_received: [UserRedEnvelopeStatsToken!]!
+  claimable_red_envelopes: [RedEnvelope!]!
+}
+
+type UserRedEnvelopeStatsToken {
+  symbol: String!
+  quantity: Float!
+  price_in_usd: Float!
+}
+
+type DiscordUser {
+  id: ID!
+  access_token: String!
+  username: String!
+  discriminator: String!
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type Referrer {
+  pulseId: String
+  id: String
+  projectName: String
+  level:String
+  startTime:String
+  endTime:String
+  rakeBack:String
+}
+type KolProfiles {
+  twitter_username: String
+  about: String
+  languages: [String]
+  kolFollowersLength: Int
+  discord: String
+  telegram: String
+  twitter: String
+  medium: String
+  mirror: String
+  substack: String
+  youtube_link:String
+  referrer:Referrer
+  web3Journey:[Web3Journey]
+  nftGallery:[nftGallery]
+  hide_telegram:Boolean
+  hide_discord:Boolean
+}
+
+type KolFollower {
+  twitter_username: String
+  wallet: String
+  influencer_score: String
+}
+
+type QueryKolFollower {
+  total: Int
+  followers: [KolFollower]
+}
+
+input WorldcoinActionValidationInput {
+  merkle_root: String!, 
+  nullifier_hash: String!, 
+  proof: String!, 
+  credential_type: String!, 
+  action: String!, 
+  signal: String!
+}
+
+type Mutation {
+  participateInAirdrop( id: ID!,wallet: WalletInput!,aptosWallet: aptosWalletInput,link_telegram_validation: AirdropParticipationLinkTelegramValidationInput,link_twitter_validation: AirdropParticipationLinkTwitterValidationInput,link_discord_validation: AirdropParticipationLinkDiscordValidationInput,share_twitter_validation: [AirdropParticipationShareTwitterValidationInput],question_input_validations: [AirdropInputQuestionInput!], google_sheet_values_validations: [GoogleSheetValueInput!],interact_with_contract_validation: AirdropParticipationInteractWithContractValidationInput,referral_code: String,injectiveAddress:String,worldcoin_action_validation: WorldcoinActionValidationInput): AirdropParticipationResult
+  twitterUserInfo(userName:String!):TwitterUserInfo
+  singleUpload(file: Upload!): File!
+  createCeramic(payload: String): String
+  updateKolProfiles(twitter_username: String!,about: String!,languages: [String!]): Boolean
+  updateKolWeb3Journey(twitter_username: String!,web3Journey:[Web3JourneyInput!]): Boolean
+  updateKolNftGallery(twitter_username: String!,nftGallery:[nftGalleryInput!]): Boolean
+  updateKolPlatform(twitter_username: String!,link_twitter_validation: AirdropParticipationLinkTwitterValidationInput,link_telegram_validation: AirdropParticipationLinkTelegramValidationInput,link_discord_validation: AirdropParticipationLinkDiscordValidationInput,medium:String,mirror:String,substack:String,youtube_link:String,hide_telegram:Boolean,hide_discord:Boolean): MessageResult!
+  statusCheck(id:String!):String!
+  followerKOL(twitter_username: String!): Boolean
+  deleteFollowerKOL(twitter_username: String!): Boolean
+  tailAirdropTransactions(airdrop_id: ID!): Airdrop
+  updateAirdropDepositTransactionHash(airdrop_id: ID!,hash: String!,wallet: WalletInput): Airdrop
+  updateRedEnvelopeOpenTransactionHash(envelope_id: ID!,hash: String!, wallet: WalletInput!): Boolean
+  generateContract(airdops: String!,airdopName:String!,symbol: String!,totalsupply: Int!,chainId: Int!): Boolean
+  redeemRewards(airdops:String): Boolean
+  userInformationReport(email:String!,twitter:String!): String!
+  linkTelegram(telegram: TelegramLoginInput!): Boolean
+  questionnaireSubmission(airdrop_id: ID!,address:String,questionnaire:UserQuestionnaireInput,index:Int):[QuestionnaireFeedback]
+  unlinkTelegram: Boolean
+  linkTwitter(link_twitter_validation: AirdropParticipationLinkTwitterValidationInput): EditProfileResult
+  addWallet(wallet: WalletInput!, twitter_username: String!): EditProfileResult
+  removeWallet(wallet: WalletInput!twitter_username: String!): EditProfileResult
+  updateWalletVisibility(wallet: WalletInput!,twitter_username: String!,visible: Boolean!): EditProfileResult
+  addAirdropSimulation(data:AirdropsimulationInput): AirdropSimulationType
+  updateVerificationCode(code: String!,time: String, count:Int): EditProfileResult
+  addReferralCampaign(domain: String!,decayRate: Float!,eligibilityThreshold: Float!): ReferralCreationPayload
+  logAirdropReferralEntry(airdrop_id: ID!,wallet: WalletInput!,referral_code: String!): logAirdropReferralEntryResult 
+  nftUpdateLevel(badgeID: String!, address: String!): NFTUpdateLevelPayload
+  uploadEventList(id: ID!,list:[String!]):Boolean!
+  addAirdropReferrer(airdrop_id: ID!referer_wallet: WalletInput!): ReferralCreationPayload
+  addRewardRule(domain: String!rewardRules: [RewardRuleInput!]): ReferralCreationPayload
+  openRedEnvelope(envelope_id: ID!wallet: WalletInput!): RedEnvelopePasswordResult
+  claimAirdrop(id: ID!, wallet: WalletInput!): RedEnvelopePasswordResult
+  requestAccessTokenWithWallet(wallet: WalletInput!,nonce: String!,signature: String!): AccessToken
+  recordWallet(wallet: WalletInput!): Boolean
+  requestAccessTokenWithAptosWallet(wallet: WalletInput!,message: String!,nonce: String!,fullMessage: String!, signature: String!): AccessToken
+  requestAccessTokenWithSuiWallet(wallet: WalletInput!,messageBytes: String!,message: String!,signature: String!): AccessToken
+  requestAccessTokenWithCosmosWallet(wallet: WalletInput!,pubkey: String!,base: String!,message: String!,signature: String!): AccessToken
+  createaSeries(series_name:String!,series_image:String!): Boolean
+}
+
+
+type TwitterUserInfo{
+  id:String!
+  name:String!
+  profile_image_url:String!
+  username:String!
+}
+
+type EditProfileResult {
+  success: Boolean!
+  reason: String
+}
+
+type AirdropParticipationResult {
+  success: Boolean!
+  reason: String
+}
+
+type InfluenceScoreResult {
+  score: Float
+  deferred: Boolean
+  success: Boolean
+  reason: String
+}
+
+type AkiProtocolStats {
+  registered_kols: Int
+  campaigns_created: Int
+  total_users: Int
+  reference_connections_established: Int
+}
+
+type AirdropReferral {
+  airdrop_id: ID!
+  title: String!
+  referral_code: String!
+  referree_wallet_address: String!
+  converted: Boolean!
+  telegramID: String
+  twitterID: String
+  discordID: String
+}
+
+# user entry in firebase authentication
+input AirdropParticipationLinkTwitterValidationInput {
+  id: ID # Firebase userID, not twitter userID
+  twitter_id: ID! # Twitter ID
+  username: String! # twitter username
+  access_token: String # Firebase access token
+  oauth_token: String
+  oauth_secret: String
+
+  oauth_request_token: String
+}
+
+# check if access token is valid and return same user
+input AirdropParticipationLinkDiscordValidationInput {
+  id: ID!
+  access_token: String! # Discord Oauth2 token
+  username: String!
+}
+
+# check if hash matches
+input AirdropParticipationLinkTelegramValidationInput {
+  id: ID!
+  auth_date: Int!
+  hash: String!
+  first_name: String
+  last_name: String
+  username: String
+  photo_url: String
+}
+
+# check if hash matches
+input TelegramLoginInput {
+  id: ID!
+  auth_date: Int!
+  hash: String!
+  first_name: String
+  last_name: String
+  username: String
+  photo_url: String
+}
+
+input AirdropParticipationShareTwitterValidationInput {
+  tweet_url: String!
+  tweet_id: String!
+}
+
+input AirdropParticipationInteractWithContractValidationInput {
+  transaction_hash: String!
+}
+
+type Profile {
+  twitterUsername: String!
+  about: String!
+  languages: [String!]
+  channels: [String!]
+  web3Experieces: [String!]
+  activities: [String!]
+}
+
+type Mutation {
+  addAirdrop(
+    # Information about the campaign, user facing
+    mode:String!
+    title: String!
+    description: String!
+    start_date: String!
+    end_date: String!
+    cover_photo: String!
+    nft_photo: String!
+    nft_video: String!
+    grading_metrics: [GradingMetricInput!]!
+    total_winners: Int
+    airdrop_type: String
+    parentLabel:String
+    # Information about the token giving away
+    token_chain: Int!
+    token_std: String
+    token_contract_addr: String
+    token_symbol: String
+    token_quantity: String
+    token_decimal:Int
+    rewardDistribution:String
+    erc721_token_ids: [String]
+    interact_contract_address: String
+    interact_contract_selector: String
+    interact_contract_desc: String
+
+    information: informationInput
+    simulationId:String
+    listed: Boolean
+    isOfficial: Boolean
+    series_name:String
+    series_image:String
+  ): Airdrop
+
+
+
+
+}
+
+
+type customization{
+  link:String,
+  type:String,
+  params:String,
+  checkKey:String,
+  errMassage:String
+}
+
+input customizationInput{
+  link:String,
+  type:String,
+  params:String,
+  checkKey:String,
+  errMassage:String
+}
+
+type AirdropSimulationType{
+    mode:String
+    address:String
+    simulationId:String
+    nftContractName:String
+    nftContractDescription:String
+    title: String
+    description: String
+    start_date: String
+    end_date: String
+    cover_photo: String
+    nft_photo: String
+    nft_video: String
+    grading_metrics: [GradingMetricSimulationType]
+    total_winners: Int
+    airdrop_type: String
+    parentLabel:String
+    # Information about the token giving away
+    token_chain: Int
+    token_std: String
+    token_contract_addr: String
+    token_symbol: String
+    token_quantity: String
+    token_decimal:Int
+    rewardDistribution:String
+    erc721_token_ids: [String]
+    interact_contract_address: String
+    interact_contract_selector: String
+    interact_contract_desc: String
+    information: informationSimulationType
+    listed: Boolean
+    isOfficial: Boolean
+    series_name:String
+}
+
+input AirdropsimulationInput{
+  simulationId:String
+  mode:String!
+  nftContractName:String
+  nftContractDescription:String
+  title: String
+  description: String
+  start_date: String
+  end_date: String
+  cover_photo: String
+  nft_photo: String
+  nft_video: String
+  grading_metrics: [GradingMetricInputSimulation]
+  total_winners: Int
+  airdrop_type: String
+  parentLabel:String
+  # Information about the token giving away
+  token_chain: Int
+  token_std: String
+  token_contract_addr: String
+  token_symbol: String
+  token_quantity: String
+  token_decimal:Int
+  rewardDistribution:String
+  erc721_token_ids: [String]
+  interact_contract_address: String
+  interact_contract_selector: String
+  interact_contract_desc: String
+  information: informationInputSimulation
+  listed: Boolean
+  isOfficial: Boolean
+  series_name:String
+}
+
+
+input aptosWalletInput {
+  address: String
+  chainName: String
+  publicKey: String
+  fullMessage: String
+  signature: String
+}
+
+type Mutation {
+  addRedEnvelope(
+    telegram_group_id: ID!
+    total_envelopes: Int!
+    wallet: WalletInput!
+    contract: ContractInput!
+    token: String!
+    token_quantity: Float!
+    decimal: Int!
+    message: String
+  ): RedEnvelopeCreationPayload
+}
+
+type Mutation {
+  checkCaptcha(
+    code: String!,
+    walletAddress: String!
+  ): EditProfileResult
+}
+
+
+type logAirdropReferralEntryResult {
+  success: Boolean!
+  reason: String
+}
+type AccessToken {
+  token: String
+}
+
+type Wallet {
+  address: String!
+  network: String
+  chain: Int
+  chainName: String
+}
+
+type AkiUser {
+  id: ID!
+  permissionLevel: Int
+  referral_code: String
+  telegram: TelegramUser
+  wallet: Wallet!
+}
+
+type TelegramUser {
+  id: String!
+  username: String
+  first_name: String
+  last_name: String
+  photo_url: String
+}
+
+type RedEnvelopeUser {
+  telegram: TelegramUser
+}
+
+input aptosWalletInput {
+  address: String
+  chainName: String
+  publicKey: String
+  fullMessage: String
+  signature: String
+}
+
+input WalletInput {
+  address: String
+  chain: Int
+  chainName: String
+  publicKey: String
+}
+
+input RewardRuleInput {
+  chain: Int!
+  token: String!
+  erc1155TokenID: String
+  rateToReward: Float!
+}
+
+input ContractInput {
+  address: String!
+  chain: Int!
+}
+
+type Contract {
+  address: String!
+  chain: Int!
+}
+
+type WalletsOpened {
+  address: String
+  username: String
+  value: Float
+}
+
+type RedEnvelope {
+  envelope_id: ID
+  contract: Contract
+  token: String!
+  token_quantity: Float!
+  token_quantity_left: Float!
+  total_envelopes: Int!
+  envelopes_left: Int!
+  owner_name: String
+  message: String
+  success: Boolean!
+  description: String
+  wallets_opened: [WalletsOpened]
+  group_title: String
+  creator_wallet: Wallet!
+}
+
+type TokenBalance {
+  name: String
+  balance: String
+  usdBalance: String
+  priceUSD: Float
+  buyVolume: String
+  sellVolume: String
+  buyOrders: [String]
+  sellOrders: [String]
+}
+
+type RedEnvelopePasswordResult {
+  id: ID
+  envelope_id: ID
+  contract: Contract
+  unhashed_password: String
+  signature: String
+  success: Boolean!
+  description: String
+  proof: [String]
+  leaf: String
+}
+
+type RedEnvelopeCreationPayload {
+  id: ID!
+  hashed_passwords: [String!]
+  root: String
+  bitsetSize: Int
+}
+
+type ReferralCreationPayload {
+  domain: String
+}
+
+type NFTUpdateLevelPayload {
+  success: Boolean!
+  reason: String
+}
+
+type User {
+  id: ID!
+  name: String
+  username: String
+  first_name: String
+  last_name: String
+  chat_activity: ChatActivity
+  chat_activities_by_date: [ChatActivitiesByDate!]
+  eth_profiles: [UserEthProfile!]!
+}
+
+type ChatMember {
+  id: ID!
+  user_id: ID!
+  name: String
+  username: String
+  first_name: String
+  last_name: String
+  chat_activity: ChatActivity
+  chat_activities_by_date: [ChatActivitiesByDate!]
+}
+
+type Chat {
+  id: ID!
+  title: String!
+  members: [ChatMember!]!
+  admins: [ChatMember!]!
+  chat_activities: ChatActivity
+  chat_activities_by_date: [ChatActivitiesByDate!]
+  active_users_count_by_date: [ActiveUsersCountByDate]
+}
+
+type Influencer {
+  handle: String!
+  followers: Int!
+  feedback_score: Int
+  total_likes: Int
+  total_replies: Int
+  total_retweets: Int
+  tweet_count: Int
+}
+
+type KOL {
+  # level: String! # locally computed on frontend
+  name: String!
+  username: String
+  is_active: Boolean
+  image_url: String
+  influence_index: Int!
+  languages: [String!]!
+  channels: [String!]!
+
+  # Editing and detailed page
+  verified: Boolean
+  is_viewer_owner: Boolean
+  all_activity_index:Int
+  followers: Int!
+  followers_yesterday: Int
+  followers_increase: Int
+  followers_increase_rate: Float
+
+  followers_index: Float!
+  followers_index_yesterday: Float
+  followers_index_increase: Float
+  followers_index_increase_rate: Float
+
+  real_followers_rate: Float!
+
+  impressions: Int!
+  sensitivity_index: Int!
+  loyalty_index: Int!
+  activity: Int!
+  quality_index: Int!
+  alt_index: Int!
+  rug_index: Int!
+  mainstream_index: Int!
+  gamefi_index: Int!
+  nft_index: Int!
+  degenscore: Int!
+  engagement_index: Int!
+  like_index: Int!
+  retweets_index: Int!
+  comments_index: Int!
+  quote_retweet_index: Int!
+  activity_index: Int!
+  defi_index: Int!
+  web3_index: Int!
+  infra_index: Int!
+  cefi_index: Int!
+  meme_index: Int!
+
+  smart_money_score: Int!
+  smart_nft_trader_score: Int!
+  wallet_balance: Int!
+  health_rate: Int!
+  on_chain_all_activity: Int!
+  nft_trading_activity_level: Int!
+  credibility: Int!
+  influence_score: Float!
+  real_follower_rate: Float!
+  influence_score_follower: Float!
+  influence_score_activity: Float!
+  influence_score_quality: Float!
+  influence_score_capability: Float!
+  influence_score_cred: Float!
+  influencer_volume_after_mention: Float!
+  marketReach: Float
+  onchainActivity: Float
+  offchainActivity: Float
+  growthProspects: Float
+  socialEngagement: Float
+  referralConversion: Float
+  marketReach_score:Float
+  onchainActivity_score: Float
+  offchainActivity_score: Float
+  growthProspects_score: Float
+  socialEngagement_score: Float
+  referralConversion_score: Float
+  totalScore: Float
+  airdrop_referral_metrics: KOLAirdropReferralMetrics
+
+  airdrop_campaigns: [Airdrop!]
+
+  wallets: [KOLWallet!]!
+
+  tags: [String!]
+  level:String
+
+
+}
+
+type KOLWallet {
+  wallet: Wallet!
+  visible_to_public: Boolean
+  uncertain: Boolean
+}
+
+type KOLAirdropReferralMetrics {
+  airdrop_referral_conversion: Int!
+  airdrop_referral_conversion_rate: Float!
+  airdrop_referral_visits: Int!
+  airdrop_referrals: [AirdropReferral]
+  airdrops: [Airdrop!]
+}
+
+type ActiveUsersCountByDate {
+  date: Int!
+  members_count: Int!
+  user_ids: [String!]!
+}
+
+type ChatActivitiesByDate {
+  date: Int!
+  chat_activities: ChatActivity!
+}
+
+type ChatActivity {
+  id: String
+  last_message_date: Int
+  average_characters_sent: Float
+  total_characters_sent: Int
+  total_messages_sent: Int
+  total_messages_sent_over_50_chars: Int
+  total_messages_sent_over_200_chars: Int
+  total_messages_sent_over_1000_chars: Int
+  total_messages_sent_over_10000_chars: Int
+}
+
+enum AirdropStatus {
+  NOT_STARTED
+  ACTIVE
+  ENDED
+}
+type AirdropParticipationDetails{
+  status:AirdropParticipationStatus
+  createTime:String
+  nowTime:String,
+  electiveTasks:[electiveTask]
+  questionnaire:[QuestionnaireFeedback]
+  winning:Int
+}
+
+enum AirdropParticipationStatus {
+  NOT_PARTICIPATED
+  PARTICIPATED_PENDING
+  PARTICIPATED_DID_NOT_WIN
+  PARTICIPATED_WON
+  PARTICIPATED_CLAIMED
+}
+
+type AkiBadgeMetadata {
+  nft_token_id: Int!
+  current_level: Int! # current level recorded on chain if minted
+  eligible_level: Int! # max eligible level, user can upgrade current_level to this level when applicable
+  owner_address: String!
+}
+
+type AkiBadge {
+  id: String!
+  name: String!
+  image_url: String
+  subtitle: String
+  description: String
+
+  current_round_start: String!
+  current_round_end: String!
+  current_round_mint_start: String!
+  current_round_mint_end: String!
+  current_round_claim_start: String # forever
+  current_round_claim_end: String!
+  current_round_snapshot: String!
+  imagesByLevel: [String]
+
+  next_round_start: String!
+  next_round_end: String!
+
+  contract: Contract!
+
+  price: Float
+  minLevel: Int
+
+  splitter_contract: Contract!
+  address_eligible_nft_metadata(
+    wallet: WalletInput
+  ): AkiBadgeEligibleNFTMetadata
+}
+
+type AkiBadgeEligibleNFTMetadata {
+  nft_token_id: Int!
+  owner_address: String!
+
+  eligible_level: Int! # max eligible level, user can upgrade current_level to this level when applicable
+  metadata_level: Int # current level recorded metadata on minted NFT
+  mint_proof: AkiBadgeProof
+
+  # eligible_data: AkiBadgeMetadata
+  # on_chain_data: AkiBadgeMetadata
+}
+
+type AkiBadgeProof {
+  leaf: String
+  proof: [String]
+  root: String
+  tokenID: Int
+}
+
+type Airdrop {
+  # Information about campaign
+  id: ID!
+  title: String
+  mode:String
+  description: String
+  start_date: String
+  end_date: String
+  cover_photo: String
+  total_winners: Int!
+  grading_metrics: [GradingMetric]
+  airdrop_type: String
+  systemAmount:String
+  rewardDistribution:String
+  # Information about token
+  token_chain: Int!
+  token_std: String!
+  token_contract_addr: String
+  token_symbol: String
+  token_quantity: String
+  token_decimal:Int
+  parentLabel:String
+  # fields reserved for contract with custom interaction
+  interact_contract_address: String
+  interact_contract_selector: String
+  interact_contract_desc: String
+  # sensitive fields only applicable to owners
+  envelope: AirdropEnvelope!
+  contract: Contract!
+  participation_count: Int!
+  participation_count_by_hours: [ParticipationCountByHour!]!
+
+  # Participation
+  participation_status(wallet: WalletInput): AirdropParticipationDetails
+  status: AirdropStatus
+
+  reward_type: String
+
+  information: information
+
+  listed: Boolean
+  isOfficial: Boolean
+  series_name:String
+  series_image:String
+  sub_activities_count:Int
+  indexNum: Int
+}
+
+
+
+
+type airdropProjectBackedBy {
+  name: String
+  web: String
+  description: String
+}
+
+input airdropProjectBackedByInput {
+  name: String
+  web: String
+  description: String
+}
+
+input airdropProjectBackedByInput {
+  name: String
+  web: String
+  description: String
+}
+
+type ParticipationCountByHour {
+  date: String!
+  count: Int!
+}
+
+enum AirdropEnvelopeDepositTransactionStatus {
+  PENDING
+  CONFIRMED
+}
+
+type AirdropEnvelopeDepositTransaction {
+  hash: String
+  status: AirdropEnvelopeDepositTransactionStatus
+}
+
+type AirdropEnvelope {
+  id: String
+  root: String
+  bitsetSize: String
+  erc721_token_ids: [String]
+  deposit_transaction: AirdropEnvelopeDepositTransaction
+}
+
+type GradingMetric {
+  task: String!
+  required: Boolean!
+  grading: Int!
+  share_link: String
+  share_comment: String
+  rewardBoost:Int
+  action: String
+  credential_types: [String]
+  app_id: String
+
+  link_url: String
+  link_description: String
+  link_task_text: String
+  link_button_text: String
+
+  twitter_id_to_follow: String
+
+  telegram_group_link_to_join: String
+  telegram_group_id_to_join: String
+  telegram_group_name: String
+
+  discord_server_link_to_join: String
+  discord_server_name: String
+  discordVoice: DiscordVoiceInfo
+
+  ahendenceCodeInfo:AhendenceCodeInfo
+  customization:customization
+  userQuestionnaire:UserQuestionnaire
+  # Contract Interaction
+  interact_contract_address: String
+  interact_contract_function_selector: String
+  interact_contract_description: String
+  interact_contract_type: String
+  interact_contract_min_dollars_limit: Float
+  interact_contract_exact_contract_address_match: Boolean
+  # Input
+  question_title: String
+  input_type: String
+  regex_to_match: String
+
+  ## Check Google Spreadsheet
+  check_google_spreadsheet_spreadsheet_id: String
+  check_google_spreadsheet_description: String
+  check_google_spreadsheet_key_colume_name: String
+  check_google_spreadsheet_value_colume_name: String
+  check_google_spreadsheet_evaluator: String
+  check_google_spreadsheet_threshold_value: Float
+}
+
+
+type electiveTask{
+ name: String,
+ index:Int,
+ rewardBoost:Int,
+}
+
+type information {
+  title: String!
+  web: String!
+  description: String!
+  image_url: String!
+  backedBy: [airdropProjectBackedBy!]
+  projectNews: String
+  communityComment: [communityComment]
+}
+
+type projectNews {
+  title: String!
+  link: String!
+  dateTime: String!
+  connect: String!
+}
+
+type communityComment {
+  title: String!
+  link: String!
+  connect: String!
+}
+
+type TokenInfo {
+  address: String
+  name: String
+  priceUSD: Float
+  txsCount: Int
+  decimal: Int
+}
+
+type EthTransaction {
+  timestamp: Int
+  tokenInfo: TokenInfo
+  value: String
+}
+
+type UserEthProfile {
+  address: String!
+  native: TokenBalance
+  tokens: [TokenBalance]
+  transactions: [EthTransaction]
+}
+
+input DiscordVoice{
+  time:Int!
+  amaStartTime:String!
+  amaEndTime:String!
+  serverLink:String!
+  channelLink:String!
+  name:String!
+}
+
+type DiscordVoiceSimulationType{
+  time:Int
+  amaStartTime:String
+  amaEndTime:String
+  serverLink:String
+  channelLink:String
+  name:String
+}
+
+
+type DiscordVoiceInfo{
+  time:Int!
+  amaStartTime:String!
+  amaEndTime:String!
+  serverLink:String!
+  channelLink:String!
+  name:String!
+}
+
+type AhendenceCodeInfo {
+  usage_count: Int
+  expiration_time: String
+}
+
+
+type UserQuestionnaire{
+   title:String!,
+   describe:String,
+   eligibility:Int,
+   awardMode:Int,
+   sheet:[QuestionnaireDomain]
+
+}
+
+type QuestionnaireDomain{
+   question:String,
+   options:[String],
+   answer:String   
+}
+
+type QuestionnaireFeedback{
+   feedback:[Boolean],
+   correctTimes:Int
+   rewardBoost:Int
+   scale:Int,
+   index:Int
+}
+
+input AhendenceCode {
+  usage_count: Int
+  expiration_time: String
+}
+
+
+input GradingMetricInput {
+  task: String!
+  required: Boolean!
+  grading: Int!
+  share_link: String
+  share_comment: String
+  rewardBoost:Int
+  action: String
+  credential_types: [String]
+  app_id: String
+
+  link_url: String
+  link_description: String
+  link_task_text: String
+  link_button_text: String
+
+  twitter_id_to_follow: String
+  telegram_group_link_to_join: String
+  telegram_group_id_to_join: String
+  telegram_group_name: String
+
+  discord_server_link_to_join: String
+  discord_server_name: String
+  discordVoice:DiscordVoice
+
+  ahendenceCode:AhendenceCode
+  customization:customizationInput
+  userQuestionnaire:UserQuestionnaireInput
+  ## Contract interaction
+  interact_contract_address: String
+  interact_contract_function_selector: String
+  interact_contract_description: String
+  interact_contract_type: String
+  interact_contract_min_dollars_limit: Float
+  interact_contract_exact_contract_address_match: Boolean
+
+  ## Inputs
+  question_title: String
+  input_type: String
+  regex_to_match: String
+
+  ## Check Google Spreadsheet
+  check_google_spreadsheet_spreadsheet_id: String
+  check_google_spreadsheet_description: String
+  check_google_spreadsheet_key_colume_name: String
+  check_google_spreadsheet_value_colume_name: String
+  check_google_spreadsheet_evaluator: String
+  check_google_spreadsheet_threshold_value: Float
+}
+
+
+
+input UserQuestionnaireInput{
+   title:String!,
+   describe:String,
+   eligibility:Int,
+   awardMode:Int,
+   sheet:[QuestionnaireDomainInput!]
+}
+
+input QuestionnaireDomainInput{
+   question:String!,
+   options:[String],
+   answer:String!     
+}
+
+input GradingMetricInputSimulation {
+  task: String
+  required: Boolean
+  grading: Int
+  share_link: String
+  share_comment: String
+  rewardBoost:Int
+  action: String
+  credential_types: [String]
+  app_id: String
+
+  link_url: String
+  link_description: String
+  link_task_text: String
+  link_button_text: String
+
+  twitter_id_to_follow: String
+
+  telegram_group_link_to_join: String
+  telegram_group_id_to_join: String
+  telegram_group_name: String
+
+  discord_server_link_to_join: String
+  discord_server_name: String
+  discordVoice:DiscordVoice
+  
+  ahendenceCode:AhendenceCode
+  customization:customizationInput
+  userQuestionnaire:UserQuestionnaireInput
+  ## Contract interaction
+  interact_contract_address: String
+  interact_contract_function_selector: String
+  interact_contract_description: String
+  interact_contract_type: String
+  interact_contract_min_dollars_limit: Float
+  interact_contract_exact_contract_address_match: Boolean
+
+  ## Inputs
+  question_title: String
+  input_type: String
+  regex_to_match: String
+
+  ## Check Google Spreadsheet
+  check_google_spreadsheet_spreadsheet_id: String
+  check_google_spreadsheet_description: String
+  check_google_spreadsheet_key_colume_name: String
+  check_google_spreadsheet_value_colume_name: String
+  check_google_spreadsheet_evaluator: String
+  check_google_spreadsheet_threshold_value: Float
+}
+
+
+type GradingMetricSimulationType {
+  task: String
+  required: Boolean
+  grading: Int
+  share_link: String
+  share_comment: String
+  rewardBoost:Int
+  action: String
+  credential_types: [String]
+  app_id: String
+
+  link_url: String
+  link_description: String
+  link_task_text: String
+  link_button_text: String
+
+  twitter_id_to_follow: String
+
+  telegram_group_link_to_join: String
+  telegram_group_id_to_join: String
+  telegram_group_name: String
+
+  discord_server_link_to_join: String
+  discord_server_name: String
+  discordVoice:DiscordVoiceSimulationType
+  userQuestionnaire:UserQuestionnaire
+  ahendenceCode:AhendenceCodeInfo
+  customization:customization
+  ## Contract interaction
+  interact_contract_address: String
+  interact_contract_function_selector: String
+  interact_contract_description: String
+  interact_contract_type: String
+  interact_contract_min_dollars_limit: Float
+  interact_contract_exact_contract_address_match: Boolean
+
+  ## Inputs
+  question_title: String
+  input_type: String
+  regex_to_match: String
+
+  ## Check Google Spreadsheet
+  check_google_spreadsheet_spreadsheet_id: String
+  check_google_spreadsheet_description: String
+  check_google_spreadsheet_key_colume_name: String
+  check_google_spreadsheet_value_colume_name: String
+  check_google_spreadsheet_evaluator: String
+  check_google_spreadsheet_threshold_value: Float
+}
+
+
+
+input informationInput {
+  title: String!
+  web: String!
+  description: String!
+  image_url: String!
+  backedBy: [String!]
+  projectNews: String!
+  communityComment: [communityCommentInput]
+}
+
+input informationInputSimulation {
+  title: String
+  web: String
+  description: String
+  image_url: String
+  backedBy: [String]
+  projectNews: String
+  communityComment: [communityCommentInputSimulation]
+}
+
+type informationSimulationType {
+  title: String
+  web: String
+  description: String
+  image_url: String
+  backedBy: [airdropProjectBackedBy]
+  projectNews: String
+  communityComment: [communityCommentSimulationType]
+}
+
+
+
+
+#input projectNewsInput {
+#  title: String!
+#  link: String!
+#  dateTime: String!
+#  connect: String!
+#}
+
+input communityCommentInput {
+  title: String!
+  link: String!
+  connect: String!
+}
+
+input communityCommentInputSimulation {
+  title: String
+  link: String
+  connect: String
+}
+
+type communityCommentSimulationType {
+  title: String
+  link: String
+  connect: String
+}
+
+
+
+

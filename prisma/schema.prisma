@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model airdrop {
+  id                        String                  @id @db.VarChar(256)
+  airdrop_id                String?                 @unique(map: "airdrop_pk_2") @db.VarChar(256)
+  airdrop_type              String?                 @db.VarChar(256)
+  isOfficial                Boolean?
+  listed                    String?                 @db.Text
+  owner_id                  String?                 @db.VarChar(256)
+  participation_count       Int?
+  reward_type               String?                 @db.VarChar(256)
+  series_image              String?                 @db.VarChar(256)
+  series_name               String?                 @db.VarChar(256)
+  cover_photo               String?                 @db.VarChar(256)
+  description               String?                 @db.VarChar(256)
+  end_date                  String?                 @db.VarChar(256)
+  mode                      String?                 @db.VarChar(256)
+  nft_photo                 String?                 @db.VarChar(256)
+  nft_video                 String?                 @db.VarChar(256)
+  parentLabel               String?                 @db.VarChar(256)
+  rewardDistribution        String?                 @db.VarChar(256)
+  start_date                String?                 @db.VarChar(256)
+  title                     String?                 @db.VarChar(256)
+  token_chain               Int?
+  token_contract_addr       String?                 @db.VarChar(256)
+  token_decimal             Int?
+  token_quantity            Int?
+  token_std                 String?                 @db.VarChar(256)
+  token_symbol              String?                 @db.VarChar(256)
+  total_winners             Int?
+  airdrop_participation     airdrop_participation[]
+  airdrop_referral          airdrop_referral[]
+  envelope                  envelope[]
+  grading_metrics           grading_metrics[]
+  information               information[]
+  participation_count_table participation_count[]
+
+  @@index([airdrop_id], map: "airdrop_id")
+}
+
+model airdrop_participation {
+  id                              String   @id @db.VarChar(256)
+  airdrop_id                      String?  @db.VarChar(256)
+  twitter                         String?  @db.VarChar(256)
+  twitter_id                      String?  @db.VarChar(256)
+  questionnaire                   String?  @db.VarChar(256)
+  nft_mint_transaction            String?  @db.VarChar(256)
+  nft_transfer_transaction        String?  @db.VarChar(256)
+  nft_step                        String?  @db.VarChar(256)
+  wallet                          String?  @db.VarChar(256)
+  chain                           Int?
+  discord                         String?  @db.VarChar(256)
+  contract_interaction            String?  @db.VarChar(256)
+  telegram                        String?  @db.VarChar(256)
+  electiveTasks                   String?  @db.VarChar(256)
+  aptos_wallet                    String?  @db.VarChar(256)
+  question_input_validations      String?  @db.VarChar(256)
+  google_sheet_values_validations String?  @db.Text
+  airdrop                         airdrop? @relation(fields: [airdrop_id], references: [airdrop_id], onDelete: NoAction, onUpdate: NoAction, map: "airdrop_participation_airdrop_airdrop_id_fk")
+
+  @@index([airdrop_id], map: "airdrop_participation_airdrop_airdrop_id_fk")
+}
+
+model airdrop_referral {
+  id            String   @id @db.VarChar(256)
+  airdrop_id    String?  @db.VarChar(256)
+  referralCode  String?  @db.VarChar(256)
+  airdropTitle  String?  @db.VarChar(256)
+  airdropID     String?  @db.VarChar(256)
+  walletAddress String?  @db.VarChar(256)
+  converted     Boolean?
+  airdrop       airdrop? @relation(fields: [airdrop_id], references: [airdrop_id], onDelete: NoAction, onUpdate: NoAction, map: "airdrop_referral_campaigns_airdrop_id_fk")
+
+  @@index([airdrop_id], map: "airdrop_referral_airdrop_airdrop_id_fk")
+}
+
+model akiusers {
+  id      String  @id @db.VarChar(256)
+  user_id String? @db.VarChar(256)
+  address String? @db.VarChar(256)
+  chain   String? @db.VarChar(256)
+  network String? @db.VarChar(256)
+}
+
+model envelope {
+  id                       String   @id @db.VarChar(256)
+  airdrop_id               String?  @db.VarChar(256)
+  bitsetSize               String?  @db.Text
+  deposit_transaction_hash String?  @db.Text
+  envelopes_left           String?  @db.Text
+  erc721_token_ids         String?  @db.Text
+  airdrop                  airdrop? @relation(fields: [airdrop_id], references: [airdrop_id], onDelete: Restrict, onUpdate: Restrict, map: "envelope_airdrop_airdrop_id_fk")
+
+  @@index([airdrop_id], map: "envelope_airdrop_airdrop_id_fk")
+}
+
+model grading_metrics {
+  id                   String   @id @db.VarChar(256)
+  campaign_id          String?  @db.Text
+  airdrop_id           String?  @db.VarChar(256)
+  grading              Int?
+  required             String?  @db.Text
+  rewardBoost          Int?
+  task                 String?  @db.Text
+  twitter_id_to_follow String?  @db.Text
+  link_button_text     String?  @db.Text
+  link_description     String?  @db.Text
+  link_task_text       String?  @db.Text
+  share_link           String?  @db.Text
+  share_comment        String?  @db.Text
+  airdrop              airdrop? @relation(fields: [airdrop_id], references: [airdrop_id], onDelete: Restrict, onUpdate: Restrict, map: "grading_metrics_airdrop_airdrop_id_fk")
+
+  @@index([airdrop_id], map: "grading_metrics_airdrop_airdrop_id_fk")
+}
+
+model information {
+  id          String   @id @db.VarChar(256)
+  airdrop_id  String?  @db.VarChar(256)
+  description String?  @db.Text
+  image_url   String?  @db.Text
+  projectNews String?  @db.Text
+  title       String?  @db.Text
+  web         String?  @db.Text
+  airdrop     airdrop? @relation(fields: [airdrop_id], references: [airdrop_id], onDelete: Restrict, onUpdate: Restrict, map: "information_airdrop_airdrop_id_fk")
+
+  @@index([airdrop_id], map: "information_airdrop_airdrop_id_fk")
+}
+
+model participation_count {
+  id         String   @id @db.VarChar(256)
+  airdrop_id String?  @db.VarChar(256)
+  timestamp  String?  @db.Text
+  count      Int?
+  airdrop    airdrop? @relation(fields: [airdrop_id], references: [airdrop_id], onDelete: Restrict, onUpdate: Restrict, map: "participation_count_airdrop_airdrop_id_fk")
+
+  @@index([airdrop_id], map: "participation_count_airdrop_airdrop_id_fk")
+}
+
+model referralcodes {
+  id          String  @id @db.VarChar(256)
+  referral_id String? @db.VarChar(256)
+  user_id     String? @db.VarChar(256)
+  source      String? @db.VarChar(256)
+}

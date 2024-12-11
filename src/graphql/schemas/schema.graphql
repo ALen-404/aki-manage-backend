@@ -1,0 +1,148 @@
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+
+ type Mutation {
+     verifySignature(address: String!, signature: String!): String!
+   }
+
+type Query {
+  Airdrops(page:Int,pageSize: Int,id: ID,name: String,start_date:String,end_date: String,is_active:String):[CampaignInfo!]!
+  getAddressLevel:String!
+}
+type Airdrop {
+  id: String
+  airdrop_id: String
+  airdrop_type: String
+  isOfficial: String
+  listed: String
+  owner_id: String
+  participation_count: Int
+  reward_type: String
+  series_image: String
+  series_name: String
+}
+
+type CampaignInfo {
+  airdrop_id: String
+  airdrop_type: String
+  title: String
+  start_date: String
+  end_date: String
+  visitors: Int
+  conversions: Int
+  microInfluencers: Int
+  visitorsGrowth: String
+  conversionRate: String
+  conversionRateGrowthRate: String
+  conversionIncrease: String
+  referredVisitors: Int
+  referredConversions: Int
+  updateTime:String
+  isOfficial:Boolean
+  listed:Boolean
+  referralInfo: [ReferralInfo]
+  total:Int
+}
+type ReferralInfo{
+  wallet: String
+  twitter: String
+  converted: String
+  referralCode: String
+  referralWallet: String
+  referralNumber: String
+  convertedNumber: String
+  convertedRate: String
+}
+
+
+
+type Airdrop_participation {
+  id: String
+  airdrop_id: String
+  twitter: String
+  questionnaire: String
+  nft_reward_transaction: String
+  wallet: String
+  discord: String
+  contract_interaction: String
+  telegram: String
+  electiveTasks: String
+  aptos_wallet: String
+  question_input_validations: String
+  google_sheet_values_validations: String
+}
+
+type Airdrop_referral {
+  id:String
+  airdrop_id:String
+  referralCode:String
+  airdropTitle:String
+  airdropID:String
+  walletAddress:String
+  converted:String
+}
+
+type Campaign {
+  id: String
+  airdrop_id: String
+  cover_photo: String
+  description: String
+  end_date: String
+  mode: String
+  nft_photo: String
+  nft_video: String
+  parentLabel: String
+  rewardDistribution: String
+  start_date: String
+  title: String
+  token_chain: Int
+  token_contract_addr: String
+  token_decimal: Int
+  token_quantity: Int
+  token_std: String
+  token_symbol: String
+  total_winners: Int
+}
+
+type Envelope {
+  id:String
+  airdrop_id:String
+  bitsetSize:String
+  deposit_transaction_hash:String
+  envelopes_left:String
+  erc721_token_ids:String
+}
+
+type Grading_metrics {
+  id: String
+  campaign_id: String
+  airdrop_id: String
+  grading: Int
+  required: String
+  rewardBoost: Int
+  task: String
+  twitter_id_to_follow: String
+  link_button_text: String
+  link_description: String
+  link_task_text: String
+  share_link: String
+  share_comment: String
+}
+
+type Information {
+  id: String
+  airdrop_id: String
+  description: String
+  image_url: String
+  projectNews: String
+  title: String
+  web: String
+}
+
+type Participation_count {
+  id: String
+  airdrop_id: String
+  timestamp: String
+  count: Int
+}
